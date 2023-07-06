@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ProductList from './ProductList';
 import axios from 'axios';
 import Cart from './Cart';
@@ -10,6 +10,10 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [cart, setCart] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const cartModalRef = useRef(null);
+  const [dragging, setDragging] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const fetchProducts = async () => {
     try {
@@ -26,6 +30,26 @@ const Home = () => {
     fetchProducts();
   }, []);
 
+  const handleDragStart = (event) => {
+    setDragging(true);
+    setPosition({
+      x: event.clientX - cartModalRef.current.offsetLeft,
+      y: event.clientY - cartModalRef.current.offsetTop,
+    });
+  };
+
+  const handleDrag = (event) => {
+    if (dragging) {
+      const newX = event.clientX - position.x;
+      const newY = event.clientY - position.y;
+      setPosition({ x: newX, y: newY });
+    }
+  };
+
+  const handleDragEnd =(event) => {
+    setDragging(false);
+  };
+
   const filterProductsByCategory = (category) => {
     setSelectedCategory(category);
   };
@@ -39,16 +63,21 @@ const Home = () => {
         }
         return item;
       });
+      setIsCartOpen(true);
       setCart(updatedCart);
     } else {
       const productToAdd = products.find((product) => product.id === productId);
       setCart((prevCart) => [...prevCart, { ...productToAdd, quantity: 1 }]);
+      setIsCartOpen(true);
     }
   };
 
   const removeFromCart = (productId) => {
     const updatedCart = cart.filter((item) => item.id !== productId);
     setCart(updatedCart);
+    if (updatedCart.length === 0) {
+      setIsCartOpen(false);
+    }
   };
 
   const updateQuantity = (productId, newQuantity) => {
@@ -91,7 +120,32 @@ const Home = () => {
       ) : (
         <>
           <ProductList products={searchedProducts} addToCart={addToCart} />
-          <Cart cart={cart} updateQuantity={updateQuantity} removeFromCart={removeFromCart} />
+          {cart.length > 0 && isCartOpen && (
+            <div
+              className="cart-modal"
+              style={{ top: position.y, left: position.x }}
+              ref={cartModalRef}
+              draggable={!dragging}
+              onDragStart={handleDragStart}
+              onDrag={handleDrag}
+              onDragEnd={handleDragEnd}
+            >
+              <div className="cart-modal-header">
+                <h3 className="cart-modal-title">Корзина</h3>
+              </div>
+              <div className="cart-modal-content">
+                <Cart cart={cart} updateQuantity={updateQuantity} removeFromCart={removeFromCart} />
+              </div>
+              <div className="cart-modal-footer">
+                <button onClick={() => setIsCartOpen(false)}>Закрыть</button>
+              </div>
+              <div
+                className="cart-modal-overlay"
+                onClick={() => setIsCartOpen(false)}
+                draggable={false}
+              ></div>
+            </div>
+          )}
         </>
       )}
     </div>
