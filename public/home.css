@@ -1,48 +1,90 @@
+@font-face {
+  font-family: 'Le chat';
+  src: url('../assets/fonts/DancingScript-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'caveat-bold';
+  src: url('../assets/fonts/Caveat-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'caveat';
+  src: url('../assets/fonts/Caveat-Regular.ttf') format('truetype');
+}
+
+.fontH1{
+  font-family: 'Le chat', sans-serif;
+}
+.fonttext{
+  font-family: 'caveat', sans-serif;
+}
+.fonttextbold{
+  font-family: 'caveat-bold', sans-serif;
+}
 .cart-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    max-width: 90%;
-    background: #fff;
-    border: 1px solid #000000;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-  }
-  
-  .cart-modal-header {
-    padding: 10px;
-    background: #f0f0f0;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .cart-modal-title {
-    margin: 0;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .cart-modal-content {
-    padding: 10px;
-  }
-  
-  .cart-modal-footer {
-    padding: 10px;
-    background: #f0f0f0;
-    border-top: 1px solid #ccc;
-    text-align: right;
-  }
-  
-  .cart-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 998;
-    cursor: move;
-  }
-  
+  position: fixed;
+  max-width: 400px;
+  width: 90%;
+  max-height: 347px;
+  background: #fff;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  overflow-y: auto;
+}
+
+.cart-modal-content {
+  font-family: 'caveat-bold', sans-serif;
+  padding: 10px;
+}
+
+.cart-modal-header {
+  font-family: 'caveat-bold', sans-serif;
+  color: #fff;
+  padding: 10px;
+  background: #007bff;
+  border-bottom: 1px solid #ccc;
+}
+
+.cart-modal-title {
+  font-family: 'caveat-bold', sans-serif;
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  user-select: none;
+}
+
+.cart-modal-footer {
+  font-family: 'caveat-bold', sans-serif;
+  padding: 10px;
+  background: #007bff;
+  border-top: 1px solid #ccc;
+  text-align: right;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  font-family: 'Le chat', sans-serif;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-content button {
+  margin-bottom: 10px;
+}
+
+

@@ -9,13 +9,13 @@ const ProductSearch = ({ onSearch }) => {
   };
 
   return (
-    <div>
-      <h3>Поиск товаров</h3>
+    <div className='fonttext'>
+      <h3 className='fonttextbold'>Поиск товаров</h3>
       <input
         type="text"
         value={searchText}
         onChange={handleInputChange}
-        placeholder="Введите название товара"
+        placeholder="Поиск..."
       />
     </div>
   );
